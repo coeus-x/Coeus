@@ -2,6 +2,7 @@ package com.modou.coeus.node;
 
 import com.modou.coeus.handler.ClassNodeOperate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,8 @@ public class CoeusClassNode {
 
     // 包信息
     private String packageInfo;
+
+    private String name;
 
     // 全路径名
     private String allPath;
@@ -38,6 +41,28 @@ public class CoeusClassNode {
 
     // 类中包含的成员变量
     private List<CoeusParamNode> params;
+
+
+    public CoeusClassNode(String name){
+        this.name = name;
+    }
+
+    public CoeusClassNode(){
+    }
+
+    /**
+    * @Description: 添加方法
+    * @Param: [coeusMethodNode]
+    * @return: void
+    * @Author: hu_pf
+    * @Date: 2021/8/13
+    */
+    public void addMethod(CoeusMethodNode coeusMethodNode){
+        if (methods == null){
+            methods = new ArrayList<>();
+        }
+        methods.add(coeusMethodNode);
+    }
 
 
     /**

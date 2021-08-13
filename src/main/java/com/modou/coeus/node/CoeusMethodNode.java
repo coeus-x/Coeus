@@ -1,5 +1,8 @@
 package com.modou.coeus.node;
 
+import com.modou.coeus.common.Constant;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +17,10 @@ public class CoeusMethodNode {
     private String allPath;
 
     // 别名
-    private String alias;
+    private String name;
+
+    // 描述：入参和出参，可以在方法中唯一确认到一个方法
+    private String desc;
 
     // 入参集合 全路径名描述
     private List<String> requestParams;
@@ -27,5 +33,30 @@ public class CoeusMethodNode {
 
     // 抛出的异常信息 记录全路径名
     private List<String> throwExceptions;
+    
+    private List<String> invokeInfos;
+
+    public CoeusMethodNode(){
+
+    }
+
+    public CoeusMethodNode(String name,String desc){
+        this.name = name;
+        this.desc = desc;
+    }
+    
+    /**
+    * @Description: 添加执行的方法信息
+    * @Param: [className, methodName, desc]
+    * @return: void
+    * @Author: hu_pf
+    * @Date: 2021/8/13
+    */
+    public void addInvokeMethodInfo(String className,String methodName,String desc){
+        if (invokeInfos == null){
+            invokeInfos = new ArrayList<>();
+        }
+        invokeInfos.add(className + Constant.SPLIT + methodName + Constant.SPLIT + desc);
+    }
 
 }
