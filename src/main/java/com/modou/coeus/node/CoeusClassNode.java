@@ -33,7 +33,7 @@ public class CoeusClassNode {
 
     private Boolean hasSuperClass = false;
     // 接口类信息
-    private List<String> interfaceNames;
+    private List<String> interfaceNames = new ArrayList<>();
 
     // 子类信息
     private List<CoeusClassNode> childClazz;
@@ -99,6 +99,7 @@ public class CoeusClassNode {
 
     public CoeusMethodNode getMethod(String name){
         CoeusMethodNode coeusMethodNode = routNameAndMethodMap.get(name);
+        // 如果本类找不到就向上父类去寻找
         if (coeusMethodNode == null && hasSuperClass){
             coeusMethodNode = ClassRouter.getInstance().getClass(this.superName).getMethod(name);
         }
@@ -107,6 +108,7 @@ public class CoeusClassNode {
 
     public CoeusMethodNode getMethod(String name,String desc){
         CoeusMethodNode coeusMethodNode = routIdAndMethodMap.get(CoeusMethodNode.generateId(name, desc));
+        // 如果本类找不到就向上父类去寻找
         if (coeusMethodNode == null && hasSuperClass){
             coeusMethodNode = ClassRouter.getInstance().getClass(this.superName).getMethod(name,desc);
         }
@@ -116,6 +118,10 @@ public class CoeusClassNode {
     public void setSuperName(String superName){
         this.superName = superName;
         this.hasSuperClass = true;
+    }
+
+    public void setInterfaceNames(List<String> interfaceNames){
+        this.interfaceNames = interfaceNames;
     }
 
 

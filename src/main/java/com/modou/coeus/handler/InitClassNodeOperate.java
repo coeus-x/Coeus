@@ -18,7 +18,7 @@ import java.util.ListIterator;
  **/
 public class InitClassNodeOperate implements ClassNodeOperate{
 
-    private static String INIT_METHOD_NAME = "<clinit>";
+    private final static String INIT_METHOD_NAME = "<clinit>";
 
     private static final ClassRouter classRouter = ClassRouter.getInstance();
 
@@ -29,6 +29,7 @@ public class InitClassNodeOperate implements ClassNodeOperate{
         List<MethodNode> methods = cn.methods;
 
         classNode.setSuperName(cn.superName);
+        classNode.setInterfaceNames(cn.interfaces);
 
         for (MethodNode methodNode : methods){
             if (INIT_METHOD_NAME.equals(methodNode.name)){
