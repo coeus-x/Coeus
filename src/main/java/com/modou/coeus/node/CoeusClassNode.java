@@ -1,5 +1,6 @@
 package com.modou.coeus.node;
 
+import com.modou.coeus.common.ClassRouter;
 import com.modou.coeus.handler.ClassNodeOperate;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
@@ -29,6 +30,8 @@ public class CoeusClassNode {
 
     // 继承类信息
     private String superName;
+
+    private Boolean hasSuperClass = false;
     // 接口类信息
     private List<String> interfaceNames;
 
@@ -95,12 +98,27 @@ public class CoeusClassNode {
 
 
     public CoeusMethodNode getMethod(String name){
-        return routNameAndMethodMap.get(name);
+        CoeusMethodNode coeusMethodNode = routNameAndMethodMap.get(name);
+        if (coeusMethodNode == null && hasSuperClass){
+            coeusMethodNode = ClassRouter.getInstance().getClass(this.superName).getMethod(name);
+        }
+        return coeusMethodNode;
     }
 
     public CoeusMethodNode getMethod(String name,String desc){
-        return routIdAndMethodMap.get(CoeusMethodNode.generateId(name,desc));
+        CoeusMethodNode coeusMethodNode = routIdAndMethodMap.get(CoeusMethodNode.generateId(name, desc));
+        if (coeusMethodNode == null && hasSuperClass){
+            coeusMethodNode = ClassRouter.getInstance().getClass(this.superName).getMethod(name,desc);
+        }
+        return coeusMethodNode;
     }
+
+    public void setSuperName(String superName){
+        this.superName = superName;
+        this.hasSuperClass = true;
+    }
+
+
 
     /**
     * @Description: 操作数据

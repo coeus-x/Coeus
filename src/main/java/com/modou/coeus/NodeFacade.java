@@ -1,6 +1,7 @@
 package com.modou.coeus;
 
 import com.modou.coeus.common.ClassRouter;
+import com.modou.coeus.node.CoeusClassNode;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,11 +20,13 @@ public class NodeFacade {
     public static final String IGNORE_CLASS = ".class";
 
     public static void main(String[] args) {
-        String projectRoot = "D:\\my_git\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\chart";
+        String projectRoot = "D:\\my_git\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\analysis";
 
         buildSource(projectRoot);
 
         ClassRouter instance = ClassRouter.getInstance();
+
+        CoeusClassNode aClass = instance.getClass("com.modou.coeus.parse.analysis.TestInterfaceImpl");
 
         System.out.println("1");
     }

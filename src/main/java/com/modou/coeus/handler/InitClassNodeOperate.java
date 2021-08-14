@@ -28,6 +28,8 @@ public class InitClassNodeOperate implements ClassNodeOperate{
 
         List<MethodNode> methods = cn.methods;
 
+        classNode.setSuperName(cn.superName);
+
         for (MethodNode methodNode : methods){
             if (INIT_METHOD_NAME.equals(methodNode.name)){
                 continue;
