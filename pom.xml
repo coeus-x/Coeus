@@ -27,6 +27,13 @@
                     <source>11</source>
                     <target>11</target>
                     <encoding>UTF-8</encoding>
+                    <!--https://stackoverflow.com/questions/64937852/maven-compile-with-compiler-option-add-exports 解决方案 -->
+                    <compilerArgs>
+                        <arg>--add-exports</arg>
+                        <arg>java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED</arg>
+                    </compilerArgs>
                 </configuration>
                 <dependencies>
                     <dependency>
