@@ -1,6 +1,14 @@
 package com.modou.coeus.handler;
 
+import com.modou.coeus.common.ClassRouter;
 import com.modou.coeus.node.CoeusClassNode;
+import com.modou.coeus.node.CoeusMethodNode;
+import jdk.internal.org.objectweb.asm.tree.AbstractInsnNode;
+import jdk.internal.org.objectweb.asm.tree.ClassNode;
+import jdk.internal.org.objectweb.asm.tree.MethodNode;
+
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * @program: coeus
@@ -10,8 +18,29 @@ import com.modou.coeus.node.CoeusClassNode;
  **/
 public class InitClassNodeOperate implements ClassNodeOperate{
 
+    private static String INIT_METHOD_NAME = "<clinit>";
 
-    public void operate(CoeusClassNode coeusClassNode) {
+    private static final ClassRouter classRouter = ClassRouter.getInstance();
 
+    public void operate(CoeusClassNode classNode) {
+
+        ClassNode cn = classNode.getMetadata();
+
+        List<MethodNode> methods = cn.methods;
+
+        for (MethodNode methodNode : methods){
+            if (INIT_METHOD_NAME.equals(methodNode.name)){
+                continue;
+            }
+            CoeusMethodNode coeusMethodNode = new CoeusMethodNode(methodNode.name,methodNode.desc);
+
+            ListIterator<AbstractInsnNode> iterator = methodNode.instructions.iterator();
+
+            while (iterator.hasNext()) {
+                AbstractInsnNode next = iterator.next();
+                coeusMethodNode.visit(classRouter.getInsnNodeHandler(next.getClass()),next);
+            }
+            classNode.addMethod(coeusMethodNode);
+        }
     }
 }

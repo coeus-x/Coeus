@@ -1,6 +1,9 @@
 package com.modou.coeus.node;
 
 import com.modou.coeus.common.Constant;
+import com.modou.coeus.handler.innerNode.InsnNodeHandler;
+import jdk.internal.org.objectweb.asm.tree.AbstractInsnNode;
+import jdk.internal.org.objectweb.asm.tree.MethodInsnNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +60,11 @@ public class CoeusMethodNode {
             invokeInfos = new ArrayList<>();
         }
         invokeInfos.add(className + Constant.SPLIT + methodName + Constant.SPLIT + desc);
+    }
+
+
+    public void visit(InsnNodeHandler insnNodeHandler,AbstractInsnNode abstractInsnNode){
+        insnNodeHandler.invoke(abstractInsnNode,this);
     }
 
 }

@@ -19,7 +19,7 @@ public class NodeFacade {
     public static final String IGNORE_CLASS = ".class";
 
     public static void main(String[] args) {
-        String projectRoot = "D:\\my_git\\MethodParser\\target\\classes\\com\\zhhiyp\\incubator\\asm\\invoke";
+        String projectRoot = "/Users/hupengfei/mygit/Coeus/target/test-classes/com/modou/coeus/parse/analysis";
 
         buildSource(projectRoot);
 

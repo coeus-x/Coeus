@@ -4,6 +4,7 @@ import com.modou.coeus.handler.innerNode.DefaultMethodInsnNodeHandler;
 import com.modou.coeus.handler.innerNode.InsnNodeHandler;
 import com.modou.coeus.handler.innerNode.MethodInsnNodeHandler;
 import com.modou.coeus.node.CoeusClassNode;
+import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +25,10 @@ public class ClassRouter {
     private static ClassRouter classRouter= new ClassRouter();
 
 
-    public void putClass(String className){
-        classRouteMap.put(className,new CoeusClassNode(className));
+    public void putClass(String className, ClassNode cn){
+        CoeusClassNode coeusClassNode = new CoeusClassNode(className);
+        coeusClassNode.initMetadata(cn);
+        classRouteMap.put(className,coeusClassNode);
     }
 
     public CoeusClassNode getClass(String className){

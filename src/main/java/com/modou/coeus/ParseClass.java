@@ -1,6 +1,7 @@
 package com.modou.coeus;
 
 import com.modou.coeus.common.ClassRouter;
+import com.modou.coeus.handler.InitClassNodeOperate;
 import com.modou.coeus.handler.innerNode.InsnNodeHandler;
 import com.modou.coeus.handler.innerNode.MethodInsnNodeHandler;
 import com.modou.coeus.node.CoeusClassNode;
@@ -28,8 +29,6 @@ public class ParseClass {
 
     private static final ClassRouter classRouter = ClassRouter.getInstance();
 
-    private static String INIT_METHOD_NAME = "<clinit>";
-
 
     public static void parseSourceClass(InputStream in) {
         ClassNode cn = new ClassNode();
@@ -41,25 +40,10 @@ public class ParseClass {
         }
 
         String className = cn.name;
-        classRouter.putClass(className);
 
-        CoeusClassNode classNode = classRouter.getClass(className);
+        classRouter.putClass(className,cn);
 
-        List<MethodNode> methods = cn.methods;
+        classRouter.getClass(className).visit(new InitClassNodeOperate());
 
-        for (MethodNode methodNode : methods){
-            if (INIT_METHOD_NAME.equals(methodNode.name)){
-                continue;
-            }
-            CoeusMethodNode coeusMethodNode = new CoeusMethodNode(methodNode.name,methodNode.desc);
-
-            ListIterator<AbstractInsnNode> iterator = methodNode.instructions.iterator();
-
-            while (iterator.hasNext()) {
-                AbstractInsnNode next = iterator.next();
-                classRouter.getInsnNodeHandler(next.getClass()).invoke(next,coeusMethodNode);
-            }
-            classNode.addMethod(coeusMethodNode);
-        }
     }
 }

@@ -1,6 +1,7 @@
 package com.modou.coeus.node;
 
 import com.modou.coeus.handler.ClassNodeOperate;
+import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,10 @@ public class CoeusClassNode {
     // 别名
     private String alias;
 
-    // 父类信息
-    private List<CoeusClassNode> parentClazz;
+    // 继承类信息
+    private String superName;
+    // 接口类信息
+    private List<String> interfaceNames;
 
     // 子类信息
     private List<CoeusClassNode> childClazz;
@@ -41,6 +44,8 @@ public class CoeusClassNode {
 
     // 类中包含的成员变量
     private List<CoeusParamNode> params;
+
+    private ClassNode metaData;
 
 
     public CoeusClassNode(String name){
@@ -62,6 +67,14 @@ public class CoeusClassNode {
             methods = new ArrayList<>();
         }
         methods.add(coeusMethodNode);
+    }
+
+    public void initMetadata(ClassNode classNode){
+        this.metaData = classNode;
+    }
+
+    public ClassNode getMetadata(){
+        return metaData;
     }
 
 
