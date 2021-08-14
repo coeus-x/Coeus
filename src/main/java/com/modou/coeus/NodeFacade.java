@@ -21,7 +21,7 @@ public class NodeFacade {
     public static final String IGNORE_CLASS = ".class";
 
     public static void main(String[] args) {
-        String projectRoot = "D:\\jd_git\\o2n-erp";
+        String projectRoot = "D:\\my_git\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\chart";
 
         buildSource(projectRoot);
 
@@ -31,6 +31,7 @@ public class NodeFacade {
 
         RouterAbility routerAbility = new RouterAbility(projectRoot);
 
+        
         System.out.println("1");
     }
 
