@@ -19,6 +19,8 @@ public class CoeusMethodNode {
     // 全路径名
     private String allPath;
 
+    private String id;
+
     // 别名
     private String name;
 
@@ -46,6 +48,7 @@ public class CoeusMethodNode {
     public CoeusMethodNode(String name,String desc){
         this.name = name;
         this.desc = desc;
+        this.id = generateId(name,desc);
     }
     
     /**
@@ -65,6 +68,19 @@ public class CoeusMethodNode {
 
     public void visit(InsnNodeHandler insnNodeHandler,AbstractInsnNode abstractInsnNode){
         insnNodeHandler.invoke(abstractInsnNode,this);
+    }
+
+    public String getId(){
+
+        return this.id;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public static String generateId(String name,String desc){
+        return name + Constant.SPLIT + desc;
     }
 
 }

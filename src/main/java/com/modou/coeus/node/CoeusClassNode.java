@@ -4,7 +4,9 @@ import com.modou.coeus.handler.ClassNodeOperate;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: coeus
@@ -39,6 +41,14 @@ public class CoeusClassNode {
     // 类中包含的方法
     private List<CoeusMethodNode> methods;
 
+    // id 和方法的路由关系
+    private Map<String,CoeusMethodNode> routIdAndMethodMap = new HashMap<>();
+
+    // 名称和方法的路由
+    private Map<String,CoeusMethodNode> routNameAndMethodMap = new HashMap<>();
+
+    private Map<String,Integer> routNameAndMethodMapCount = new HashMap<>();
+
     // 类中包含的注解
     private List<CoeusAnnotationNode> annotations;
 
@@ -66,6 +76,12 @@ public class CoeusClassNode {
         if (methods == null){
             methods = new ArrayList<>();
         }
+        routIdAndMethodMap.put(coeusMethodNode.getId(), coeusMethodNode);
+
+        routNameAndMethodMap.put(coeusMethodNode.getName(), coeusMethodNode);
+
+        Integer count = routNameAndMethodMapCount.getOrDefault(coeusMethodNode.getName(), 0);
+        routNameAndMethodMapCount.put(coeusMethodNode.getName(),count+1);
         methods.add(coeusMethodNode);
     }
 
@@ -77,6 +93,14 @@ public class CoeusClassNode {
         return metaData;
     }
 
+
+    public CoeusMethodNode getMethod(String name){
+        return routNameAndMethodMap.get(name);
+    }
+
+    public CoeusMethodNode getMethod(String name,String desc){
+        return routIdAndMethodMap.get(CoeusMethodNode.generateId(name,desc));
+    }
 
     /**
     * @Description: 操作数据
