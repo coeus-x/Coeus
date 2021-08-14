@@ -1,5 +1,6 @@
 package com.modou.coeus;
 
+import com.modou.coeus.ability.RouterAbility;
 import com.modou.coeus.common.ClassRouter;
 import com.modou.coeus.node.CoeusClassNode;
 
@@ -20,13 +21,15 @@ public class NodeFacade {
     public static final String IGNORE_CLASS = ".class";
 
     public static void main(String[] args) {
-        String projectRoot = "D:\\my_git\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\analysis";
+        String projectRoot = "D:\\my_git\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\chart";
 
         buildSource(projectRoot);
 
         ClassRouter instance = ClassRouter.getInstance();
 
         CoeusClassNode aClass = instance.getClass("com.modou.coeus.parse.analysis.TestInterfaceImpl");
+
+        RouterAbility routerAbility = new RouterAbility(projectRoot);
 
         System.out.println("1");
     }
