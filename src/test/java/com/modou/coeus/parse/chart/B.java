@@ -19,5 +19,11 @@ public class B {
 
         C3 c3 = new C3();
         c3.invoke();
+
+        testPrivate();
+    }
+
+    private void testPrivate(){
+
     }
 }

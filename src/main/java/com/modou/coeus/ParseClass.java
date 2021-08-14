@@ -35,7 +35,7 @@ public class ParseClass {
         try {
             ClassReader cr = new ClassReader(in);
             cr.accept(cn, 0);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
