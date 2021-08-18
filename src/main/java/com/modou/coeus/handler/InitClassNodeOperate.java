@@ -20,7 +20,6 @@ public class InitClassNodeOperate implements ClassNodeOperate{
 
     private final static String INIT_METHOD_NAME = "<clinit>";
 
-    private static final ClassRouter classRouter = ClassRouter.getInstance();
 
     public void operate(CoeusClassNode classNode) {
 
@@ -37,12 +36,8 @@ public class InitClassNodeOperate implements ClassNodeOperate{
             }
             CoeusMethodNode coeusMethodNode = new CoeusMethodNode(methodNode.name,methodNode.desc);
 
-            ListIterator<AbstractInsnNode> iterator = methodNode.instructions.iterator();
+            coeusMethodNode.initMethodInfo(methodNode);
 
-            while (iterator.hasNext()) {
-                AbstractInsnNode next = iterator.next();
-                coeusMethodNode.visit(classRouter.getInsnNodeHandler(next.getClass()),next);
-            }
             classNode.addMethod(coeusMethodNode);
         }
     }
