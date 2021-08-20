@@ -4,10 +4,7 @@ import com.modou.coeus.common.ClassRouter;
 import com.modou.coeus.handler.ClassNodeOperate;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @program: coeus
@@ -55,6 +52,8 @@ public class CoeusClassNode {
     // 类中包含的注解
     private List<CoeusAnnotationNode> annotations;
 
+    private Set<String> invokeClassNodes;
+
     // 类中包含的成员变量
     private List<CoeusParamNode> params;
 
@@ -85,7 +84,16 @@ public class CoeusClassNode {
 
         Integer count = routNameAndMethodMapCount.getOrDefault(coeusMethodNode.getName(), 0);
         routNameAndMethodMapCount.put(coeusMethodNode.getName(),count+1);
+
+        addInvokeClassNodes(coeusMethodNode);
         methods.add(coeusMethodNode);
+    }
+
+    private void addInvokeClassNodes(CoeusMethodNode coeusMethodNode){
+        if (invokeClassNodes == null){
+            invokeClassNodes = new HashSet<>();
+        }
+        invokeClassNodes.addAll(coeusMethodNode.getInvokeInfosClass());
     }
 
     public void initMetadata(ClassNode classNode){

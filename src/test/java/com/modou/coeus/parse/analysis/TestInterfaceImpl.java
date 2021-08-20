@@ -11,12 +11,13 @@ public class TestInterfaceImpl extends TestExtend implements TestInterface {
 
     @Override
     public void invoke() {
-        test();
+        InvokeService test = test();
+        test.invoke();
     }
 
-    private void test(){
+    private InvokeService test(){
         InvokeService invokeService = new InvokeService();
-        invokeService.invoke();
+        return invokeService;
     }
 
     void testNoDesc(){

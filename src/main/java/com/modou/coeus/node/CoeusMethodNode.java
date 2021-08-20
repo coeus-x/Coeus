@@ -68,6 +68,17 @@ public class CoeusMethodNode {
         invokeInfos.add(className + Constant.SPLIT + methodName + Constant.SPLIT + desc);
     }
 
+    public List<String> getInvokeInfosClass(){
+        List<String> classNames = new ArrayList<>();
+        if (invokeInfos != null){
+            invokeInfos.forEach(e->{
+                String[] split = e.split(Constant.SPLIT);
+                classNames.add(split[0]);
+            });
+        }
+        return classNames;
+    }
+
 
     public void visit(InsnNodeHandler insnNodeHandler,AbstractInsnNode abstractInsnNode){
         insnNodeHandler.invoke(abstractInsnNode,this);
