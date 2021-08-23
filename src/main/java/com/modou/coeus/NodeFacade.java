@@ -7,6 +7,7 @@ import com.modou.coeus.node.CoeusClassNode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * @program: coeus
@@ -21,7 +22,7 @@ public class NodeFacade {
     public static final String IGNORE_CLASS = ".class";
 
     public static void main(String[] args) {
-        String projectRoot = "D:\\my_git\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\chart";
+        String projectRoot = "D:\\WorkSpace_git\\commonwork_learn_idea\\黑马\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\chart";
 
         buildSource(projectRoot);
 
@@ -30,9 +31,8 @@ public class NodeFacade {
         CoeusClassNode aClass = instance.getClass("com.modou.coeus.parse.analysis.TestInterfaceImpl");
 
         RouterAbility routerAbility = new RouterAbility(projectRoot);
-
-        
-        System.out.println("1");
+        final List<String> paths = routerAbility.routeByClassName("com/modou/coeus/parse/chart/A", "com/modou/coeus/parse/chart/D");
+        System.out.println(paths);
     }
 
 

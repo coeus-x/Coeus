@@ -10,6 +10,7 @@ public class C2 {
 
 
     public void invoke(){
-
+        D d = new D();
+        d.invoke();
     }
 }

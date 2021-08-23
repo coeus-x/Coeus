@@ -11,6 +11,9 @@ public class A {
     public void invoke(){
         B b = new B();
         b.invoke();
+
+        C3 c3 = new C3();
+        c3.invoke();
     }
 
 }

@@ -1,12 +1,15 @@
 package com.modou.coeus.node;
 
+import com.modou.coeus.common.ClassRouter;
 import com.modou.coeus.common.Constant;
 import com.modou.coeus.handler.innerNode.InsnNodeHandler;
 import jdk.internal.org.objectweb.asm.tree.AbstractInsnNode;
 import jdk.internal.org.objectweb.asm.tree.MethodInsnNode;
+import jdk.internal.org.objectweb.asm.tree.MethodNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * @program: coeus
@@ -65,6 +68,17 @@ public class CoeusMethodNode {
         invokeInfos.add(className + Constant.SPLIT + methodName + Constant.SPLIT + desc);
     }
 
+    public List<String> getInvokeInfosClass(){
+        List<String> classNames = new ArrayList<>();
+        if (invokeInfos != null){
+            invokeInfos.forEach(e->{
+                String[] split = e.split(Constant.SPLIT);
+                classNames.add(split[0]);
+            });
+        }
+        return classNames;
+    }
+
 
     public void visit(InsnNodeHandler insnNodeHandler,AbstractInsnNode abstractInsnNode){
         insnNodeHandler.invoke(abstractInsnNode,this);
@@ -79,8 +93,32 @@ public class CoeusMethodNode {
         return this.name;
     }
 
+    public void setAccess(Integer access){
+        this.access = access;
+    }
+
     public static String generateId(String name,String desc){
         return name + Constant.SPLIT + desc;
     }
 
+    /**
+    * @Description: 初始化方法的信息
+    * @Param: [methodNode]
+    * @return: void
+    * @Author: hu_pf
+    * @Date: 2021/8/18
+    */
+    public void initMethodInfo(MethodNode methodNode){
+        ClassRouter classRouter = ClassRouter.getInstance();
+
+        ListIterator<AbstractInsnNode> iterator = methodNode.instructions.iterator();
+
+        setAccess(methodNode.access);
+
+        while (iterator.hasNext()) {
+            AbstractInsnNode next = iterator.next();
+
+            visit(classRouter.getInsnNodeHandler(next.getClass()),next);
+        }
+    }
 }

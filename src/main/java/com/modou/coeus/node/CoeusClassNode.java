@@ -4,10 +4,7 @@ import com.modou.coeus.common.ClassRouter;
 import com.modou.coeus.handler.ClassNodeOperate;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @program: coeus
@@ -33,7 +30,7 @@ public class CoeusClassNode {
 
     private Boolean hasSuperClass = false;
     // 接口类信息
-    private List<String> interfaceNames;
+    private List<String> interfaceNames = new ArrayList<>();
 
     // 子类信息
     private List<CoeusClassNode> childClazz;
@@ -54,6 +51,8 @@ public class CoeusClassNode {
 
     // 类中包含的注解
     private List<CoeusAnnotationNode> annotations;
+
+    private Set<String> invokeClassNodes;
 
     // 类中包含的成员变量
     private List<CoeusParamNode> params;
@@ -85,7 +84,16 @@ public class CoeusClassNode {
 
         Integer count = routNameAndMethodMapCount.getOrDefault(coeusMethodNode.getName(), 0);
         routNameAndMethodMapCount.put(coeusMethodNode.getName(),count+1);
+
+        addInvokeClassNodes(coeusMethodNode);
         methods.add(coeusMethodNode);
+    }
+
+    private void addInvokeClassNodes(CoeusMethodNode coeusMethodNode){
+        if (invokeClassNodes == null){
+            invokeClassNodes = new HashSet<>();
+        }
+        invokeClassNodes.addAll(coeusMethodNode.getInvokeInfosClass());
     }
 
     public void initMetadata(ClassNode classNode){
@@ -99,6 +107,7 @@ public class CoeusClassNode {
 
     public CoeusMethodNode getMethod(String name){
         CoeusMethodNode coeusMethodNode = routNameAndMethodMap.get(name);
+        // 如果本类找不到就向上父类去寻找
         if (coeusMethodNode == null && hasSuperClass){
             coeusMethodNode = ClassRouter.getInstance().getClass(this.superName).getMethod(name);
         }
@@ -107,6 +116,7 @@ public class CoeusClassNode {
 
     public CoeusMethodNode getMethod(String name,String desc){
         CoeusMethodNode coeusMethodNode = routIdAndMethodMap.get(CoeusMethodNode.generateId(name, desc));
+        // 如果本类找不到就向上父类去寻找
         if (coeusMethodNode == null && hasSuperClass){
             coeusMethodNode = ClassRouter.getInstance().getClass(this.superName).getMethod(name,desc);
         }
@@ -118,7 +128,13 @@ public class CoeusClassNode {
         this.hasSuperClass = true;
     }
 
+    public void setInterfaceNames(List<String> interfaceNames){
+        this.interfaceNames = interfaceNames;
+    }
 
+    public Set<String> getInvokeClassNodes(){
+        return invokeClassNodes;
+    }
 
     /**
     * @Description: 操作数据
