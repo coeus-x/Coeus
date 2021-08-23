@@ -22,7 +22,7 @@ public class NodeFacade {
     public static final String IGNORE_CLASS = ".class";
 
     public static void main(String[] args) {
-        String projectRoot = "D:\\WorkSpace_git\\commonwork_learn_idea\\黑马\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\chart";
+        String projectRoot = "D:\\my_git\\Coeus\\target\\test-classes\\com\\modou\\coeus\\parse\\chart";
 
         buildSource(projectRoot);
 
