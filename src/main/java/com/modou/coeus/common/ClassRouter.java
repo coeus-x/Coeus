@@ -68,4 +68,9 @@ public class ClassRouter {
         return insnNodeHandler;
     }
 
+    public Map<String, CoeusClassNode> obtainClassRouteMap(){
+        return classRouteMap;
+    }
+
+
 }

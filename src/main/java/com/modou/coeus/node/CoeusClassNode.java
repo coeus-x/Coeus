@@ -132,7 +132,9 @@ public class CoeusClassNode {
         this.interfaceNames = interfaceNames;
     }
 
-
+    public Set<String> getInvokeClassNodes(){
+        return invokeClassNodes;
+    }
 
     /**
     * @Description: 操作数据
