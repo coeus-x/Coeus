@@ -1,4 +1,4 @@
-package com.modou.coeus.ability;
+package com.modou.coeus.ability.route;
 
 
 import com.modou.coeus.NodeFacade;

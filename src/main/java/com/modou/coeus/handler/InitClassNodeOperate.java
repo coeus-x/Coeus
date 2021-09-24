@@ -29,6 +29,7 @@ public class InitClassNodeOperate implements ClassNodeOperate{
 
         classNode.setSuperName(cn.superName);
         classNode.setInterfaceNames(cn.interfaces);
+        classNode.setClassType(cn.access);
 
         for (MethodNode methodNode : methods){
             if (INIT_METHOD_NAME.equals(methodNode.name)){

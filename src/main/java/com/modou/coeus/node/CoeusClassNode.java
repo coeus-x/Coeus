@@ -1,6 +1,7 @@
 package com.modou.coeus.node;
 
 import com.modou.coeus.common.ClassRouter;
+import com.modou.coeus.constant.ClassTypeConstant;
 import com.modou.coeus.handler.ClassNodeOperate;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
@@ -59,8 +60,15 @@ public class CoeusClassNode {
 
     private ClassNode metaData;
 
+    private Class aClass;
+
 
     public CoeusClassNode(String name){
+        try {
+            this.aClass = Class.forName(name.replaceAll("/", "."));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         this.name = name;
     }
 
@@ -132,8 +140,24 @@ public class CoeusClassNode {
         this.interfaceNames = interfaceNames;
     }
 
+    public void setClassType(int classType){
+        this.classType = classType;
+    }
+
     public Set<String> getInvokeClassNodes(){
         return invokeClassNodes;
+    }
+
+    public Boolean isInterface(){
+        return this.aClass.isInterface();
+    }
+
+    public Boolean isEnum(){
+        return this.aClass.isEnum();
+    }
+
+    public Class getaClass(){
+        return this.aClass;
     }
 
     /**

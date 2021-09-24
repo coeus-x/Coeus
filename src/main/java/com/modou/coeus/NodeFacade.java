@@ -1,6 +1,6 @@
 package com.modou.coeus;
 
-import com.modou.coeus.ability.RouterAbility;
+import com.modou.coeus.ability.route.RouterAbility;
 import com.modou.coeus.common.ClassRouter;
 import com.modou.coeus.node.CoeusClassNode;
 
